@@ -1,14 +1,15 @@
 module.exports = {
-    module:{
-        rules:[
-            // Shaders
-            {
-                test: /\.(glsl|vs|fs|vert|frag)$/,
-                exclude: /node_modules/,
-                use: [
-                    'raw-loader'
-                ]
-            }
-        ]
-    }
+  chainWebpack: (config) => {
+    config.module
+      .rule("webgl")
+      .test(/\.(glsl|vs|fs|vert|frag)$/)
+      .exclude.add(/node_modules/)
+      .end()
+      .use("raw-loader")
+      .loader("raw-loader")
+      .end()
+      .use("glslify-loader")
+      .loader("glslify-loader")
+      .end()
+  },
 }
